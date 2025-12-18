@@ -133,3 +133,36 @@ http://localhost:<port>/weatherforecast
 ---
 
 > This repository is built step-by-step to demonstrate real development workflows rather than a copy-paste tutorial.
+
+
+---
+
+## 🐳 Stage 2 — Docker
+
+### Goal
+Run ASP.NET Web API inside a Docker container.
+
+### Steps Done
+- Created `Dockerfile`
+- Published application in Release mode
+- Built Docker image
+- Ran container locally
+
+### Docker Commands
+```bash
+dotnet publish -c Release
+docker build -t weatherapi:1 .
+docker run -p 8080:8080 weatherapi:1
+```
+
+### Test Endpoint
+```
+GET http://localhost:8080/weatherforecast
+```
+
+### Result
+- API runs successfully inside Docker
+- Endpoint accessible from browser
+
+> Next stage: improve Dockerfile (multi-stage build)
+
