@@ -207,3 +207,34 @@ docker run -p 8080:8080 weatherapi:2
 * No SDK included in final image
 
 > Next stage: Docker Compose
+
+---
+
+## 🐳 Stage 4 — Docker Compose
+
+### Goal
+Run the API using Docker Compose (service-based setup).
+
+### Files Added
+- `docker-compose.yml`
+
+### docker-compose.yml
+```yaml
+version: "3.9"
+services:
+  api:
+    image: weatherapi:3
+    ports:
+      - "8080:8080"
+```
+
+### Commands
+```bash
+docker compose up
+```
+
+### Result
+- API runs via Compose
+- Easier start/stop and future multi-service setup
+
+> Next stage: add another service (e.g., database)
