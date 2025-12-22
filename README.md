@@ -166,3 +166,44 @@ GET http://localhost:8080/weatherforecast
 
 > Next stage: improve Dockerfile (multi-stage build)
 
+---
+
+## 🐳 Stage 3 — Docker (Multi-stage Build)
+
+### Goal
+
+Create a cleaner and smaller Docker image using multi-stage build.
+
+### Changes
+
+* Build app inside container
+* Runtime image contains only published output
+
+### Dockerfile (Multi-stage)
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/publish .
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "WeatherApi.dll"]
+```
+
+### Commands
+
+```bash
+docker build -t weatherapi:2 .
+docker run -p 8080:8080 weatherapi:2
+```
+
+### Result
+
+* Smaller image size
+* No SDK included in final image
+
+> Next stage: Docker Compose
