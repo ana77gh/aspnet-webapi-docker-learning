@@ -237,4 +237,86 @@ docker compose up
 - API runs via Compose
 - Easier start/stop and future multi-service setup
 
-> Next stage: add another service (e.g., database)
+
+---
+
+## 🐳 Stage 4.1 — Environment Variables Defined Directly in Compose
+
+### Goal
+Configure application environment directly inside `docker-compose.yml`.
+
+### Changes
+Environment variables were defined inline using the `environment` section.
+
+### docker-compose.yml (excerpt)
+```yaml
+services:
+  api:
+    image: weatherapi:3
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+```
+
+### Result
+- Application runs in Development mode
+- Configuration works but is tightly coupled to Compose file
+
+### Lesson Learned
+- Inline environment variables are quick but not ideal for multiple environments
+
+---
+
+## 🐳 Stage 4.2 — Using `.env` File (Development)
+
+### Goal
+Externalize environment configuration using a `.env` file.
+
+### Changes
+- Added `.env`
+- Updated Compose to load variables from file
+
+### `.env`
+```env
+ASPNETCORE_ENVIRONMENT=Development
+```
+
+### docker-compose.yml (excerpt)
+```yaml
+services:
+  api:
+    image: weatherapi:3
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+```
+
+### Result
+- Configuration separated from Compose file
+- Easier to manage and maintain
+
+---
+
+## 🐳 Stage 4.3 — Preparing for Multiple Environments
+
+### Goal
+Prepare the setup to support different environments (Development / Production).
+
+### Changes
+- Introduced environment-specific `.env` pattern
+- Configuration logic stays the same, only values change
+
+### Example
+```text
+.env              -> Development
+.env.production   -> Production (planned)
+```
+
+### Result
+- Docker Compose setup is ready for real-world usage
+- Environment switching does not require code changes
+
+> Next stage: add database service (PostgreSQL)
+
