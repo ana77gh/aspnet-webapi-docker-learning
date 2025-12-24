@@ -318,5 +318,46 @@ Prepare the setup to support different environments (Development / Production).
 - Docker Compose setup is ready for real-world usage
 - Environment switching does not require code changes
 
-> Next stage: add database service (PostgreSQL)
+---
+
+## 🐳 Stage 5 — Adding PostgreSQL Service
+
+### Goal
+Run the ASP.NET Web API together with a PostgreSQL database using Docker Compose.
+
+### Services
+- `api` — ASP.NET Core Web API
+- `db` — PostgreSQL 16
+
+### Changes
+- Added PostgreSQL service to `docker-compose.yml`
+- Introduced Docker volume for database persistence
+- Database configuration managed via environment variables
+
+### docker-compose.yml (excerpt)
+```yaml
+services:
+  api:
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+```
+
+### Result
+- API and database run in isolated containers
+- Database data is persisted using Docker volumes
+- Port conflict with local PostgreSQL installations is avoided
+
+### Scope Note
+This project intentionally stops at infrastructure setup.
+Application-level database integration is out of scope, as the focus of this repository is Docker fundamentals.
+
 
