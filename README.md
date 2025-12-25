@@ -1,7 +1,6 @@
 ﻿# ASP.NET Web API Portfolio — Stage 1 (Before Docker)
 
-> **Status:** In Progress
-> **Stage:** Environment Setup & Troubleshooting (No Docker yet)
+> **Status:** Completed (Beginner Docker Portfolio)
 
 ---
 
